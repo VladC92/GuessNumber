@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuessNumber
 {
-    class Program
+    static class Program
     {
-
-
-        static void Main(string[] args)
+        private static void Main()
         {
 
-            textColor(ConsoleColor.Yellow, "This game has been  created by Vladd");
+            TextColor(ConsoleColor.Yellow, "A game created by Vlad");
 
 
-            textColor(ConsoleColor.White, "Please enter your name : ");
+            TextColor(ConsoleColor.White, "Please enter your name : ");
 
 
 
@@ -24,36 +18,28 @@ namespace GuessNumber
             string playerName = Console.ReadLine();
 
 
-            textColor(ConsoleColor.Blue, "Hello " + playerName.ToLower() + " , let's play a game...");
+            if (playerName != null)
+                TextColor(ConsoleColor.Blue, "Hello " + playerName.ToLower() + " , let's play a game...");
             Console.WriteLine();
 
 
             Console.WriteLine("Choose a max number to guess (From 1 to your choice) : ");
-            string choosedNumber = Console.ReadLine();
-            int number = 0;
-            int.TryParse(choosedNumber, out number);
+            string chooseNumber = Console.ReadLine();
+            int.TryParse(chooseNumber, out var number);
 
             try
             {
-                number = Int32.Parse(choosedNumber);
-
-                if (number > Int32.MaxValue)
-                {
-                    Console.WriteLine("OMG WHAT NUMBER ARE YOU WRITING?? , if you really want a so high number , atleast choose the max one , that is " + Int32.MaxValue);
-
-
-                }
-
+                if (chooseNumber != null) number = Int32.Parse(chooseNumber);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                textColor(ConsoleColor.Red, "OMG WHAT NUMBER ARE YOU WRITING?? , if you really want a so high number , atleast choose the max one , that is " + Int32.MaxValue);
+                TextColor(ConsoleColor.Red, "OMG WHAT NUMBER ARE YOU WRITING?? , if you really want a so high number , at least choose the max one , that is " + Int32.MaxValue);
 
             }
 
 
 
-            textColor(ConsoleColor.Blue, "Please choose a number between " + 1 + " and " + number);
+            TextColor(ConsoleColor.Blue, "Please choose a number between " + 1 + " and " + number);
 
 
 
@@ -69,7 +55,7 @@ namespace GuessNumber
 
 
                 int guess = 0;
-                int tryies = 0;
+                int tries = 0;
 
                 while (guess != correctNumber)
                 {
@@ -81,57 +67,51 @@ namespace GuessNumber
                             Console.WriteLine("The correct number is " + correctNumber);
                             continue;
                         }
-                       
-                        else
-                        {    
-                            textColor(ConsoleColor.Red, "Please enter a correct number");
-                            Console.ResetColor();
-                            continue;
-                        }
+
+                        TextColor(ConsoleColor.Red, "Please enter a correct number");
+                        continue;
                     }
 
-                    guess = Int32.Parse(input);
+                    if (input != null) guess = Int32.Parse(input);
                     if (guess < correctNumber)
                     {
 
-                        textColor(ConsoleColor.Red, " Too low !! , keep guessing");
-                        tryies++;
+                        TextColor(ConsoleColor.Red, " Too low !! , keep guessing");
+                        tries++;
 
                     }
                     else if (guess > number)
                     {
-                        textColor(ConsoleColor.Red, "Hey , what are you writing? The max number is higher than what you choose , your max number is " + number + "!!");
+                        TextColor(ConsoleColor.Red, "Hey , what are you writing? The max number is higher than what you choose , your max number is " + number + "!!");
                     }
                     else if (guess > correctNumber)
                     {
-                        textColor(ConsoleColor.Yellow, "Too high , try  more!!");
-                        tryies++;
+                        TextColor(ConsoleColor.Yellow, "Too high , try  more!!");
+                        tries++;
                     }
 
 
 
                     if (guess == correctNumber)
                     {
-                        textColor(ConsoleColor.Green, "Well done , you guessed the number!!");
-                        if (tryies < 10)
+                        TextColor(ConsoleColor.Green, "Well done , you guessed the number!!");
+                        if (tries < 10)
                         {
-                            textColor(ConsoleColor.Green, "You needed only " + tryies + " tryies to make it , well done");
+                            TextColor(ConsoleColor.Green, "You needed only " + tries + " tries to make it , well done");
 
                             Console.ResetColor();
                         }
-                        else if (tryies > 10 && tryies < 20)
-                        {
-                            textColor(ConsoleColor.Yellow, "You needed  " + tryies + " tryies to make it , but is still good!!");
-                        }
-                        else if (tryies > 20)
-                        {
-                            textColor(ConsoleColor.Red, "You needed  " + tryies + " tryies to make it , you are a pretty bad guesser LOL !!!!");
-                        }
+                        else if (tries > 10 && tries < 20)
+                            TextColor(ConsoleColor.Yellow,
+                                "You needed  " + tries + " tries to make it , but is still good!!");
+                        else if (tries > 20)
+                            TextColor(ConsoleColor.Red,
+                                "You needed  " + tries + " tries to make it , you are a pretty bad guesser LOL !!!!");
 
                     }
 
                 }
-                textColor(ConsoleColor.Green, "Thank you for playing my game!");
+                TextColor(ConsoleColor.Green, "Thank you for playing my game!");
                 Console.WriteLine();
                 Console.WriteLine("Press any key to finish...");
                 Console.ReadKey(true);
@@ -145,19 +125,12 @@ namespace GuessNumber
         }
 
 
-        static void textColor(ConsoleColor color, string message)
+        private static void TextColor(ConsoleColor color, string message)
         {
             Console.ForegroundColor = color;
 
             Console.WriteLine(message);
             Console.ResetColor();
-        }
-        static void theNumber(int num1)
-        {
-            Console.WriteLine("Choose a max number to guess : ");
-            string choosedNumber = Console.ReadLine();
-            int.Parse(choosedNumber);
-            Console.WriteLine("Please choose a number between " + num1 + " and " + choosedNumber);
         }
     }
 }
